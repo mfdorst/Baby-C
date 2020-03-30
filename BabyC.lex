@@ -13,10 +13,11 @@ void yyerror (const char *s)
 
 %}
 
-/*Option to get the line number*/
 %option yylineno
 
-/*We are not using yywrap. So, use this option to disable it and supress a compile error*/
+/* Prevent unused warnings */
+%option nounput
+%option noinput
 %option noyywrap
 
 %%

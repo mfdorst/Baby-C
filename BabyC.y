@@ -16,12 +16,6 @@
   
 %}
 
-//Put any initialization code here 
-%initial-action 
-{
-
-}
-
 %token LE "<="
 %token GE ">="
 %token EQ "=="
