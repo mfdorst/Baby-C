@@ -4,8 +4,6 @@ DBGCFLAGS = -g -O0
 
 all: bbc
 
-debug: bbc
-
 bbc: Parser Scanner YourCode 
 	$(CXX) $(CWARN) $(DBGCFLAGS) BabyC.tab.o BabyC.yy.o driver.o your_code.o -o bcc
 
