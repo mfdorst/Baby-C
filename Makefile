@@ -4,8 +4,8 @@ DBGCFLAGS = -g -O0
 
 all: bbc
 
-bbc: BabyC.tab.o BabyC.yy.o your_code.o driver.o 
-	$(CXX) $(CWARN) $(DBGCFLAGS) BabyC.tab.o BabyC.yy.o driver.o your_code.o -o bcc
+bbc: parser.tab.o lexer.yy.o your_code.o driver.o 
+	$(CXX) $(CWARN) $(DBGCFLAGS) parser.tab.o lexer.yy.o driver.o your_code.o -o bcc
 
 %.o: %.cpp
 	$(CXX) $(CWARN) $(DBGCFLAGS) -c $<
