@@ -10,6 +10,10 @@
 
 // The ASTNode root
     extern ASTNode* gASTRoot;
+
+  #define YYERROR_VERBOSE
+  #define YYDEBUG 1
+  
 %}
 
 //Put any initialization code here 
@@ -43,34 +47,83 @@
 %token <num> NUM
 
 //Specify the type for each non-terminal in the grammar. Here are some samples:
+%type <node> DeclarationList
 %type <node> Statement
-%type <node> Assignment
+%type <node> StatementList
 %type <node> Expr
 %type <node> Term
 %type <node> Factor
 // Add the rest of the types for the grammar's symbols
 
-
 %%
-
-// Write the grammar for BabyC, and write an embedded action for each production. Here are some samples for you:
 
 Goal: "main" '(' ')' '{' DeclarationList StatementList '}'	{gASTRoot=$6;} // Store the AST root node in gASTRoot
 ;
 
-DeclarationList:  | Declaration DeclarationList // Note that a DeclarationList may be empty
-;
+DeclarationList: /* Empty */{}
+| Declaration DeclarationList {}
 
-Declaration: "int" IDENT ';' {AddDeclaration($2); printf("Processing declaration of %s\n", $2);}
-;
+Declaration:
+"int" IDENT ';'
+{
+  AddDeclaration($2);
+  printf("Processing declaration of %s\n", $2);
+};
 
-Factor: IDENT 		{$$ = CreateIdentNode($1); printf("Creating IDENT node for %s\n", $1);}
-	| NUM 		{$$ = CreateNumNode($1); printf("Creating NUM node for %d\n", $1);}
-	| '('Expr')'	{$$ = $2;}
-;
+StatementList: /* Empty */
+{
+  $$ = NULL;
+} 
+| Statement StatementList
+{
+  $$ = CreateStatementListNode($1,$2);
+  printf("Adding a statement to a statement list \n");
+};
 
-StatementList: {$$ = NULL;} 
-               | Statement StatementList	{$$ = CreateStatementListNode($1,$2); printf("Adding a statement to a statement list \n");}
-;
+Statement: Expr ';'
+{
+  $$ = $1;
+};
+
+Expr: Expr '+' Term
+{
+  $$ = make_op(OP_ADD, $1, $3);
+}
+| Expr '-' Term
+{
+  $$ = make_op(OP_SUB, $1, $3);
+}
+| Term
+{
+  $$ = $1;
+};
+
+Term: Term '*' Factor
+{
+  $$ = make_op(OP_MULT, $1, $3);
+}
+| Term '/' Factor
+{
+  $$ = make_op(OP_DIV, $1, $3);
+}
+| Factor
+{
+  $$ = $1;
+};
+
+Factor: IDENT
+{
+  $$ = CreateIdentNode($1);
+  printf("Creating IDENT node for %s\n", $1);
+}
+| NUM
+{
+  $$ = CreateNumNode($1);
+  printf("Creating NUM node for %d\n", $1);
+}
+| '('Expr')'
+{
+  $$ = $2;
+};
 
 %%

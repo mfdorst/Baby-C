@@ -1,8 +1,8 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "BabyC.tab.h"
 #include "your_code.h"
+#include "BabyC.tab.h"
 
 void yyerror (const char *s) 
 {
@@ -47,8 +47,8 @@ void yyerror (const char *s)
 "else" return ELSE;
 "while" return WHILE;
 
-        yylval.string = strdup(yytext); return IDENT; // This is the action for IDENT. Write the regular expression before the action.
-    	yylval.num = atoi(yytext); return NUM; // This is the action for NUM. Write the regular expression before the action.
+[a-zA-Z_][a-zA-Z0-9_]* yylval.string = strdup(yytext); return IDENT; // This is the action for IDENT. Write the regular expression before the action.
+[0-9]+ yylval.num = atoi(yytext); return NUM; // This is the action for NUM. Write the regular expression before the action.
 
 [ \t\n]+		//Whitespace is ignored
 .           printf( "ERROR on Line %d: Unrecognized token \n", yylineno ); exit(1); //No match. Fatal error.
