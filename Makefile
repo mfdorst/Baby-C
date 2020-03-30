@@ -10,7 +10,7 @@ bbc: BabyC.tab.o BabyC.yy.o your_code.o driver.o
 %.o: %.cpp
 	$(CXX) $(CWARN) $(DBGCFLAGS) -c $<
 
-%.yy.cpp: %.lex
+%.yy.cpp: %.l
 	flex -o $@ $<
 
 %.tab.cpp: %.y
