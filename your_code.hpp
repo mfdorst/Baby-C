@@ -39,7 +39,7 @@ struct ASTNode {
 ASTNode *CreateNumNode(int num);
 ASTNode *CreateIdentNode(char *name);
 ASTNode *CreateStatementListNode(ASTNode *st, ASTNode *stList);
-ASTNode *make_op(ASTOp operator, ASTNode *left_operand, ASTNode *right_operand);
+ASTNode *make_op(ASTOp op, ASTNode *left_operand, ASTNode *right_operand);
 
 // Need a function to add a declaration to your symbol table
 void AddDeclaration(char *name);

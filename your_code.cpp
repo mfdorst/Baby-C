@@ -1,4 +1,4 @@
-#include "your_code.h"
+#include "your_code.hpp"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,10 +31,9 @@ ASTNode *CreateStatementListNode(ASTNode *statement, ASTNode *statement_list) {
   }
 }
 
-ASTNode *make_op(ASTOp operator, ASTNode *left_operand,
-                 ASTNode *right_operand) {
+ASTNode *make_op(ASTOp op, ASTNode *left_operand, ASTNode *right_operand) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->op = operator;
+  node->op = op;
   node->left = left_operand;
   node->right = right_operand;
   return node;

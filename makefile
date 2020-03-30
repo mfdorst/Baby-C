@@ -1,4 +1,4 @@
-CC = gcc
+CXX = g++
 CWARN = -Wall -Wextra -fsanitize=address
 DBGCFLAGS = -g -O0
 
@@ -7,20 +7,20 @@ all: bbc
 debug: bbc
 
 bbc: Parser Scanner YourCode 
-	$(CC) $(CWARN) $(DBGCFLAGS) BabyC.tab.o lex.yy.o driver.o your_code.o -o bcc
+	$(CXX) $(CWARN) $(DBGCFLAGS) BabyC.tab.o BabyC.yy.o driver.o your_code.o -o bcc
 
-YourCode: your_code.o driver.o 
+YourCode: your_code.o driver.o
 
 Scanner: BabyC.lex 
-	flex BabyC.lex
-	$(CC) $(DBGCFLAGS) -c lex.yy.c
+	flex -o BabyC.yy.cpp BabyC.lex
+	$(CXX) $(DBGCFLAGS) -c BabyC.yy.cpp
 
 Parser: BabyC.y  
-	bison -d BabyC.y
-	$(CC) $(DBGCFLAGS) -c BabyC.tab.c
+	bison -o BabyC.tab.cpp -d BabyC.y
+	$(CXX) $(DBGCFLAGS) -c BabyC.tab.cpp
 
-%.o: %.c 
-	$(CC) $(CWARN) $(DBGCFLAGS) -c $<
+%.o: %.cpp
+	$(CXX) $(CWARN) $(DBGCFLAGS) -c $<
 
 clean:
 	rm -f *.o *.tab.* *.yy.* bcc
