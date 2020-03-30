@@ -2,10 +2,12 @@ CXX = g++
 CWARN = -Wall -Wextra -fsanitize=address
 DBGCFLAGS = -g -O0
 
-all: bbc
+all: bcc
 
-bbc: parser.tab.o lexer.yy.o your_code.o driver.o 
-	$(CXX) $(CWARN) $(DBGCFLAGS) parser.tab.o lexer.yy.o driver.o your_code.o -o bcc
+OBJS := parser.tab.o lexer.yy.o ast.o main.o
+
+bcc: $(OBJS)
+	$(CXX) $(CWARN) $(DBGCFLAGS) $(OBJS) -o $@
 
 %.o: %.cpp
 	$(CXX) $(CWARN) $(DBGCFLAGS) -c $<
