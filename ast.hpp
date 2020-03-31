@@ -26,9 +26,9 @@ struct ASTNode {
 
 extern ASTNode *g_ast_root;
 
-ASTNode *CreateNumNode(int num);
-ASTNode *CreateIdentNode(char *name);
-ASTNode *CreateStatementListNode(ASTNode *st, ASTNode *stList);
+ASTNode *make_num(int num);
+ASTNode *make_ident(char *name);
+ASTNode *make_statement_list(ASTNode *st, ASTNode *stList);
 ASTNode *make_op(ASTOp op, ASTNode *left_operand, ASTNode *right_operand);
 
 void AddDeclaration(char *name);

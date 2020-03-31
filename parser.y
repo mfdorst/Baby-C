@@ -68,7 +68,7 @@ StatementList: /* Empty */
 } 
 | Statement StatementList
 {
-  $$ = CreateStatementListNode($1,$2);
+  $$ = make_statement_list($1,$2);
   printf("Adding a statement to a statement list \n");
 };
 
@@ -105,12 +105,12 @@ Term: Term '*' Factor
 
 Factor: IDENT
 {
-  $$ = CreateIdentNode($1);
+  $$ = make_ident($1);
   printf("Creating IDENT node for %s\n", $1);
 }
 | NUM
 {
-  $$ = CreateNumNode($1);
+  $$ = make_num($1);
   printf("Creating NUM node for %d\n", $1);
 }
 | '('Expr')'

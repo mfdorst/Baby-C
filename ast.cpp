@@ -5,14 +5,14 @@
 
 // Write the implementations of the functions that do the real work here
 
-ASTNode *CreateNumNode(int num) {
+ASTNode *make_num(int num) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_NUM;
   node->num = num;
   return node;
 }
 
-ASTNode *CreateIdentNode(char *name) {
+ASTNode *make_ident(char *name) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_NUM;
   node->name = name;
@@ -22,7 +22,7 @@ ASTNode *CreateIdentNode(char *name) {
 // Take a statement node and a statement list node and connect them together
 // to form a bigger statement list node (add the statement to the statement
 // list). Return a pointer to the bigger list that resulted from this linking
-ASTNode *CreateStatementListNode(ASTNode *statement, ASTNode *statement_list) {
+ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list) {
   if (statement_list != NULL) {
     statement_list->next = statement;
     return statement_list;
