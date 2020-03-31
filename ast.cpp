@@ -7,14 +7,14 @@
 
 ASTNode *CreateNumNode(int num) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->type = ASTNODE_NUM;
+  node->type = AST_NUM;
   node->num = num;
   return node;
 }
 
 ASTNode *CreateIdentNode(char *name) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->type = ASTNODE_NUM;
+  node->type = AST_NUM;
   node->name = name;
   return node;
 }
