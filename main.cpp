@@ -1,6 +1,6 @@
 #include "ast.hpp"
 #include "lexer.hpp"
-#include "make_unique.h"
+#include "make_unique.hpp"
 #include <fstream>
 #include <iostream>
 #include <memory>
