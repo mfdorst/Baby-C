@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "ast.hpp"
+#include "lexer.hpp"
 #include "parser.tab.hpp"
 
 void yyerror (const char *s) 
@@ -10,8 +11,10 @@ void yyerror (const char *s)
    exit(1);
 }
 
+#define YY_INPUT(buf, result, max_size) lex_input(buf, result, max_size)
 
 %}
+
 
 %option yylineno
 
@@ -36,7 +39,7 @@ void yyerror (const char *s)
 "}" return '}';
 
 "||" return OR;
-"&&" return AND; 
+"&&" return AND;
 "==" return EQ;
 "!=" return NE;
 "<=" return LE;
@@ -48,10 +51,8 @@ void yyerror (const char *s)
 "else" return ELSE;
 "while" return WHILE;
 
-[a-zA-Z_][a-zA-Z0-9_]* yylval.string = strdup(yytext); return IDENT; // This is the action for IDENT. Write the regular expression before the action.
-[0-9]+ yylval.num = atoi(yytext); return NUM; // This is the action for NUM. Write the regular expression before the action.
+[a-zA-Z_][a-zA-Z0-9_]* yylval.string = strdup(yytext); return IDENT;
+[0-9]+ yylval.num = atoi(yytext); return NUM;
 
 [ \t\n]+		//Whitespace is ignored
 .           printf( "ERROR on Line %d: Unrecognized token \n", yylineno ); exit(1); //No match. Fatal error.
-
-

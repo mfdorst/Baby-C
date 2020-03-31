@@ -1,16 +1,17 @@
 CXX = g++
-CWARN = -Wall -Wextra -fsanitize=address
-DBGCFLAGS = -g -O0
+CXXFLAGS = -std=c++11
+WARNFLAGS = -Wall -Wextra -Wno-deprecated-register -fsanitize=address
+DEBUGFLAGS = -g -O0
 
 all: bcc
 
 OBJS := parser.tab.o lexer.yy.o ast.o main.o
 
 bcc: $(OBJS)
-	$(CXX) $(CWARN) $(DBGCFLAGS) $(OBJS) -o $@
+	$(CXX) $(CXXFLAGS) $(WARNFLAGS) $(DEBUGFLAGS) $(OBJS) -o $@
 
 %.o: %.cpp
-	$(CXX) $(CWARN) $(DBGCFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) $(WARNFLAGS) $(DEBUGFLAGS) -c $<
 
 %.yy.cpp: %.l
 	flex -o $@ $<
