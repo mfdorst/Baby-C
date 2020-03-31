@@ -33,6 +33,8 @@ struct ASTNode {
   // struct
 };
 
+extern ASTNode *g_ast_root;
+
 // Add functions to create the different kinds of ASTNodes
 // These functions are called by the code embedded in the grammar.
 // Here are some samples:
