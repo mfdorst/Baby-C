@@ -1,48 +1,37 @@
 #include "ast.hpp"
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 // Write the implementations of the functions that do the real work here
 
-ASTNode *make_num(int num) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+std::shared_ptr<ASTNode> make_num(int num) {
+  auto node = std::make_shared<ASTNode>();
   node->type = AST_NUM;
   node->num = num;
   return node;
 }
 
-ASTNode *make_ident(char *name) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+std::shared_ptr<ASTNode> make_ident(std::string name) {
+  auto node = std::make_shared<ASTNode>();
   node->type = AST_NUM;
-  node->name = name;
+  node->name = std::move(name);
   return node;
 }
 
-// Take a statement node and a statement list node and connect them together
-// to form a bigger statement list node (add the statement to the statement
-// list). Return a pointer to the bigger list that resulted from this linking
-ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list) {
-  if (statement_list != NULL) {
+std::shared_ptr<ASTNode> make_statement_list(std::shared_ptr<ASTNode> statement,
+                                             std::shared_ptr<ASTNode> statement_list) {
+  if (statement_list) {
     statement_list->next = statement;
     return statement_list;
-  } else {
-    return statement;
   }
+  return statement;
 }
 
-ASTNode *make_op(ASTOp op, ASTNode *left_operand, ASTNode *right_operand) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand,
+                                 std::shared_ptr<ASTNode> right_operand) {
+  auto node = std::make_shared<ASTNode>();
   node->op = op;
-  node->left = left_operand;
-  node->right = right_operand;
+  node->left = std::move(left_operand);
+  node->right = std::move(right_operand);
   return node;
 }
 
-void AddDeclaration(char *name) {}
-
-// Commented out in this assignment
-/*void GenerateILOC(ASTNode* node);
-{
-
-}*/
+void add_declaration(std::string name) {}

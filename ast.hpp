@@ -1,5 +1,7 @@
-#ifndef YOUR_CODE_H
-#define YOUR_CODE_H
+#pragma once
+
+#include <memory>
+#include <string>
 
 enum ASTNodeType {
   AST_ARITH_OP,
@@ -18,19 +20,19 @@ struct ASTNode {
   ASTNodeType type;
   ASTOp op;
   int num;
-  char *name;
-  ASTNode *left;
-  ASTNode *right;
-  ASTNode *next;
+  std::string name;
+  std::shared_ptr<ASTNode> left;
+  std::shared_ptr<ASTNode> right;
+  std::shared_ptr<ASTNode> next;
 };
 
-extern ASTNode *g_ast_root;
+extern std::shared_ptr<ASTNode> g_ast_root;
 
-ASTNode *make_num(int num);
-ASTNode *make_ident(char *name);
-ASTNode *make_statement_list(ASTNode *st, ASTNode *stList);
-ASTNode *make_op(ASTOp op, ASTNode *left_operand, ASTNode *right_operand);
+std::shared_ptr<ASTNode> make_num(int num);
+std::shared_ptr<ASTNode> make_ident(std::string name);
+std::shared_ptr<ASTNode> make_statement_list(std::shared_ptr<ASTNode> statement,
+                                             std::shared_ptr<ASTNode> statement_list);
+std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand,
+                                 std::shared_ptr<ASTNode> right_operand);
 
-void AddDeclaration(char *name);
-
-#endif
+void add_declaration(std::string name);

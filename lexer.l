@@ -1,8 +1,10 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include <memory>
 #include "ast.hpp"
 #include "lexer.hpp"
+#include "parse_node.hpp"
 #include "parser.tab.hpp"
 
 void yyerror (const char *s) 
@@ -51,8 +53,19 @@ void yyerror (const char *s)
 "else" return ELSE;
 "while" return WHILE;
 
-[a-zA-Z_][a-zA-Z0-9_]* yylval.string = strdup(yytext); return IDENT;
-[0-9]+ yylval.num = atoi(yytext); return NUM;
+[a-zA-Z_][a-zA-Z0-9_]* {
+  yylval.string = yytext;
+  return IDENT;
+}
 
-[ \t\n]+		//Whitespace is ignored
-.           printf( "ERROR on Line %d: Unrecognized token \n", yylineno ); exit(1); //No match. Fatal error.
+[0-9]+ {
+  yylval.num = std::stoi(yytext);
+  return NUM;
+}
+
+[ \t\n]+ ; // Ignore whitespace
+
+. {
+  printf( "ERROR on Line %d: Unrecognized token \n", yylineno );
+  exit(1);
+}

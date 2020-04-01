@@ -1,6 +1,7 @@
 %{
 	#include <stdio.h>
 	#include "ast.hpp"
+  #include "parse_node.hpp"
 
 	extern int yylex();
 	extern int yyerror(const char *);
@@ -21,13 +22,6 @@
 %token IF "if"
 %token ELSE "else"
 %token WHILE "while"
-
-%union 
-{
-	ASTNode* node;
-	int num;
-	char* string;
-}
 
 // Terminals
 %token <string> IDENT
@@ -58,8 +52,8 @@ DeclarationList: /* Empty */
 Declaration:
 "int" IDENT ';'
 {
-  AddDeclaration($2);
-  printf("Processing declaration of %s\n", $2);
+  add_declaration($2);
+  printf("Processing declaration of %s\n", $2.c_str());
 };
 
 StatementList: /* Empty */
@@ -106,7 +100,7 @@ Term: Term '*' Factor
 Factor: IDENT
 {
   $$ = make_ident($1);
-  printf("Creating IDENT node for %s\n", $1);
+  printf("Creating IDENT node for %s\n", $1.c_str());
 }
 | NUM
 {
