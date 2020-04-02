@@ -1,7 +1,7 @@
 %{
-	#include <stdio.h>
 	#include "ast.hpp"
   #include "parse_node.hpp"
+  #include <iostream>
 
 	extern int yylex();
 	extern int yyerror(const char *);
@@ -31,6 +31,8 @@
 %type <node> DeclarationList
 %type <node> Statement
 %type <node> StatementList
+%type <node> Assignment
+%type <node> AssignmentLHS
 %type <node> Expr
 %type <node> Term
 %type <node> Factor
@@ -42,18 +44,12 @@ Goal: "main" '(' ')' '{' DeclarationList StatementList '}'
   g_ast_root = $6;
 };
 
-DeclarationList: /* Empty */
-{}
-| Declaration DeclarationList
-{
-
-};
+DeclarationList: /* Empty */ {} | Declaration DeclarationList {};
 
 Declaration:
 "int" IDENT ';'
 {
   add_declaration($2);
-  printf("Processing declaration of %s\n", $2.c_str());
 };
 
 StatementList: /* Empty */
@@ -62,13 +58,22 @@ StatementList: /* Empty */
 } 
 | Statement StatementList
 {
-  $$ = make_statement_list($1,$2);
-  printf("Adding a statement to a statement list \n");
+  $$ = make_statement_list($1, $2);
 };
 
-Statement: Expr ';'
+Statement: Assignment
 {
   $$ = $1;
+};
+
+Assignment: AssignmentLHS '=' Expr ';'
+{
+  $$ = make_assign($1, $3);
+};
+
+AssignmentLHS: IDENT
+{
+  $$ = make_ident($1, true);
 };
 
 Expr: Expr '+' Term
@@ -99,16 +104,15 @@ Term: Term '*' Factor
 
 Factor: IDENT
 {
-  $$ = make_ident($1);
-  printf("Creating IDENT node for %s\n", $1.c_str());
+  $$ = make_ident($1, false);
 }
 | NUM
 {
   $$ = make_num($1);
-  printf("Creating NUM node for %d\n", $1);
 }
 | '('Expr')'
 {
+  std::cout << "Creating Expression node in parentheses\n";
   $$ = $2;
 };
 

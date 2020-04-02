@@ -28,11 +28,12 @@ struct ASTNode {
 
 extern std::shared_ptr<ASTNode> g_ast_root;
 
+std::shared_ptr<ASTNode> make_assign(std::shared_ptr<ASTNode> lhs, std::shared_ptr<ASTNode> rhs);
 std::shared_ptr<ASTNode> make_num(int num);
-std::shared_ptr<ASTNode> make_ident(std::string name);
+std::shared_ptr<ASTNode> make_ident(std::string name, bool left_hand);
 std::shared_ptr<ASTNode> make_statement_list(std::shared_ptr<ASTNode> statement,
                                              std::shared_ptr<ASTNode> statement_list);
 std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand,
                                  std::shared_ptr<ASTNode> right_operand);
 
-void add_declaration(std::string name);
+void add_declaration(const std::string &name);
