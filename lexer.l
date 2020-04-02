@@ -53,12 +53,12 @@ void yyerror (const char *s)
 "else" return ELSE;
 "while" return WHILE;
 
-[a-zA-Z_][a-zA-Z0-9_]* {
+[a-zA-Z][a-zA-Z0-9]* {
   yylval.string = yytext;
   return IDENT;
 }
 
-[0-9]+ {
+[1-9][0-9]* {
   yylval.num = std::stoi(yytext);
   return NUM;
 }
