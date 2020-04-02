@@ -1,5 +1,6 @@
 %{
 	#include "ast.hpp"
+  #include "symbol_table.hpp"
   #include "parse_node.hpp"
   #include <iostream>
 
@@ -55,6 +56,9 @@ DeclarationList: /* Empty */ {} | Declaration DeclarationList {};
 Declaration:
 "int" IDENT ';'
 {
+  if (symbol_declared($2)) {
+    yyerror(("Multiple declarations of '" + $2 + "'").c_str());
+  }
   add_declaration($2);
 };
 
@@ -163,6 +167,9 @@ Term: Term '*' Factor
 
 Factor: IDENT
 {
+  if (!symbol_declared($1)) {
+    yyerror("Ident not declared");
+  }
   $$ = make_ident($1, false);
 }
 | NUM

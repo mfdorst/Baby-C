@@ -10,7 +10,6 @@ ASTNodeRef make_assign(ASTNodeRef lhs, ASTNodeRef rhs) {
 }
 
 ASTNodeRef make_comparison(ASTCompOp op, ASTNodeRef lhs, ASTNodeRef rhs) {
-
   std::cout << "Creating Compare node\n";
   auto node = std::make_shared<ASTNode>();
   node->comp_op = op;
@@ -79,10 +78,6 @@ ASTNodeRef make_while(ASTNodeRef condition, ASTNodeRef statement_list) {
   node->condition = std::move(condition);
   node->while_block = std::move(statement_list);
   return node;
-}
-
-void add_declaration(const std::string &name) {
-  std::cout << "Processing declaration of " << name << '\n';
 }
 
 std::string op_to_str(ASTOp op) {

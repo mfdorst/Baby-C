@@ -66,6 +66,5 @@ void yyerror (const char *s)
 [ \t\n]+ ; // Ignore whitespace
 
 . {
-  printf( "ERROR on Line %d: Unrecognized token \n", yylineno );
-  exit(1);
+  yyerror("Unrecognized token");
 }

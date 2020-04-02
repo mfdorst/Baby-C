@@ -51,5 +51,3 @@ ASTNodeRef make_num(int num);
 ASTNodeRef make_op(ASTOp op, ASTNodeRef left_operand, ASTNodeRef right_operand);
 ASTNodeRef make_statement_list(ASTNodeRef statement, ASTNodeRef statement_list);
 ASTNodeRef make_while(ASTNodeRef condition, ASTNodeRef statement_list);
-
-void add_declaration(const std::string &name);
