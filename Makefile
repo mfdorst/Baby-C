@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11
+CXXFLAGS = -std=c++0x
 WARNFLAGS = -Wall -Wextra -Wno-deprecated-register -fsanitize=address
 DEBUGFLAGS = -g -O0
 
