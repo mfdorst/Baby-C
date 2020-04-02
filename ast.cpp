@@ -27,11 +27,19 @@ ASTNodeRef make_ident(std::string name, bool left_hand) {
 }
 
 ASTNodeRef make_if(ASTNodeRef condition, ASTNodeRef if_block, ASTNodeRef else_block) {
-  std::cout << "Creating if" << (else_block ? "-else" : "") << " Statement node\n";
+  std::cout << "Creating if-else Statement node\n";
   auto node = std::make_shared<ASTNode>();
   node->condition = std::move(condition);
   node->if_block = std::move(if_block);
   node->else_block = std::move(else_block);
+  return node;
+}
+
+ASTNodeRef make_if(ASTNodeRef condition, ASTNodeRef if_block) {
+  std::cout << "Creating if Statement node\n";
+  auto node = std::make_shared<ASTNode>();
+  node->condition = std::move(condition);
+  node->if_block = std::move(if_block);
   return node;
 }
 
