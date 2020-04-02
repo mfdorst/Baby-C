@@ -39,6 +39,9 @@ std::shared_ptr<ASTNode> make_assign(std::shared_ptr<ASTNode> lhs, std::shared_p
 std::shared_ptr<ASTNode> make_comparison(ASTCompOp op, std::shared_ptr<ASTNode> lhs,
                                          std::shared_ptr<ASTNode> rhs);
 std::shared_ptr<ASTNode> make_ident(std::string name, bool left_hand);
+std::shared_ptr<ASTNode> make_if(std::shared_ptr<ASTNode> condition,
+                                 std::shared_ptr<ASTNode> if_block,
+                                 std::shared_ptr<ASTNode> else_block = nullptr);
 std::shared_ptr<ASTNode> make_num(int num);
 std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand,
                                  std::shared_ptr<ASTNode> right_operand);

@@ -34,6 +34,7 @@
 %type <node> Assignment
 %type <node> AssignmentLHS
 %type <node> WhileLoop
+%type <node> If
 %type <node> Condition
 %type <node> Compare
 %type <node> ComparePr
@@ -73,6 +74,10 @@ Statement: Assignment
 | WhileLoop
 {
   $$ = $1;
+}
+| If
+{
+  $$ = $1;
 };
 
 Assignment: AssignmentLHS '=' Expr ';'
@@ -88,6 +93,15 @@ AssignmentLHS: IDENT
 WhileLoop: WHILE '(' Condition ')' '{' StatementList '}'
 {
   $$ = make_while($3, $6);
+};
+
+If: IF '(' Condition ')' '{' StatementList '}'
+{
+  $$ = make_if($3, $6);
+}
+| IF '(' Condition ')' '{' StatementList '}' ELSE '{' StatementList '}'
+{
+  $$ = make_if($3, $6, $10);
 };
 
 Condition: Compare

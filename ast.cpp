@@ -36,6 +36,17 @@ std::shared_ptr<ASTNode> make_ident(std::string name, bool left_hand) {
   return node;
 }
 
+std::shared_ptr<ASTNode> make_if(std::shared_ptr<ASTNode> condition,
+                                 std::shared_ptr<ASTNode> if_block,
+                                 std::shared_ptr<ASTNode> else_block) {
+  std::cout << "Creating if Statement node\n";
+  auto node = std::make_shared<ASTNode>();
+  node->condition = std::move(condition);
+  node->if_block = std::move(if_block);
+  node->else_block = std::move(else_block);
+  return node;
+}
+
 std::shared_ptr<ASTNode> make_statement_list(std::shared_ptr<ASTNode> statement,
                                              std::shared_ptr<ASTNode> statement_list) {
   std::cout << "Adding a Statement to a Statement list \n";
