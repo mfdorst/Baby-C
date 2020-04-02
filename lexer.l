@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <memory>
+#include <stdexcept>
 #include "ast.hpp"
 #include "lexer.hpp"
 #include "parse_node.hpp"
@@ -13,7 +14,21 @@ void yyerror (const char *s)
    exit(1);
 }
 
-#define YY_INPUT(buf, result, max_size) lex_input(buf, result, max_size)
+#define YY_INPUT(buf, bytes_read, max_bytes_to_read) \
+  bytes_read = 0; \
+  if (!g_lexer_input) { \
+    throw std::runtime_error{"g_lexer_input is not initialized"}; \
+  } \
+  while (true) { \
+    char c = g_lexer_input->get(); \
+    if (g_lexer_input->eof()) { \
+      break; \
+    } \
+    buf[bytes_read++] = c; \
+    if (bytes_read == max_bytes_to_read) { \
+      break; \
+    } \
+  } \
 
 %}
 
