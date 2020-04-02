@@ -62,10 +62,7 @@ Declaration:
   add_declaration($2);
 };
 
-StatementList: /* Empty */
-{
-  $$ = NULL;
-} 
+StatementList: /* Empty */ {} 
 | Statement StatementList
 {
   $$ = make_statement_list($1, $2);
