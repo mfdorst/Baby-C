@@ -5,7 +5,7 @@
 #include <string>
 
 struct ParseNode {
-  std::shared_ptr<ASTNode> node;
+  ASTNodeRef node;
   int num;
   std::string string;
   ASTCompOp comp_op;

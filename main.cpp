@@ -9,7 +9,7 @@ std::unique_ptr<std::ifstream> g_lexer_input;
 extern int yyparse();
 
 // A global variable that holds a pointer to the AST root
-std::shared_ptr<ASTNode> g_ast_root;
+ASTNodeRef g_ast_root;
 
 int main(int argc, char **argv) {
   if (argc != 2) {

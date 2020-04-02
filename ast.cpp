@@ -1,7 +1,7 @@
 #include "ast.hpp"
 #include <iostream>
 
-std::shared_ptr<ASTNode> make_assign(std::shared_ptr<ASTNode> lhs, std::shared_ptr<ASTNode> rhs) {
+ASTNodeRef make_assign(ASTNodeRef lhs, ASTNodeRef rhs) {
   std::cout << "Creating Assignment node\n";
   auto node = std::make_shared<ASTNode>();
   node->right = std::move(rhs);
@@ -9,8 +9,7 @@ std::shared_ptr<ASTNode> make_assign(std::shared_ptr<ASTNode> lhs, std::shared_p
   return node;
 }
 
-std::shared_ptr<ASTNode> make_comparison(ASTCompOp op, std::shared_ptr<ASTNode> lhs,
-                                         std::shared_ptr<ASTNode> rhs) {
+ASTNodeRef make_comparison(ASTCompOp op, ASTNodeRef lhs, ASTNodeRef rhs) {
 
   std::cout << "Creating Compare node\n";
   auto node = std::make_shared<ASTNode>();
@@ -20,7 +19,7 @@ std::shared_ptr<ASTNode> make_comparison(ASTCompOp op, std::shared_ptr<ASTNode> 
   return node;
 }
 
-std::shared_ptr<ASTNode> make_ident(std::string name, bool left_hand) {
+ASTNodeRef make_ident(std::string name, bool left_hand) {
   std::cout << "Creating " << (left_hand ? "left-hand " : "") << "IDENT node for " << name << '\n';
   auto node = std::make_shared<ASTNode>();
   node->type = AST_NUM;
@@ -28,9 +27,7 @@ std::shared_ptr<ASTNode> make_ident(std::string name, bool left_hand) {
   return node;
 }
 
-std::shared_ptr<ASTNode> make_if(std::shared_ptr<ASTNode> condition,
-                                 std::shared_ptr<ASTNode> if_block,
-                                 std::shared_ptr<ASTNode> else_block) {
+ASTNodeRef make_if(ASTNodeRef condition, ASTNodeRef if_block, ASTNodeRef else_block) {
   std::cout << "Creating if" << (else_block ? "-else" : "") << " Statement node\n";
   auto node = std::make_shared<ASTNode>();
   node->condition = std::move(condition);
@@ -39,7 +36,7 @@ std::shared_ptr<ASTNode> make_if(std::shared_ptr<ASTNode> condition,
   return node;
 }
 
-std::shared_ptr<ASTNode> make_num(int num) {
+ASTNodeRef make_num(int num) {
   std::cout << "Creating NUM node for " << num << '\n';
   auto node = std::make_shared<ASTNode>();
   node->type = AST_NUM;
@@ -47,8 +44,7 @@ std::shared_ptr<ASTNode> make_num(int num) {
   return node;
 }
 
-std::shared_ptr<ASTNode> make_logical_op(ASTLogicalOp op, std::shared_ptr<ASTNode> lhs,
-                                         std::shared_ptr<ASTNode> rhs) {
+ASTNodeRef make_logical_op(ASTLogicalOp op, ASTNodeRef lhs, ASTNodeRef rhs) {
   std::cout << "Creating " << (op == OP_AND ? "AND" : "OR") << " node\n";
   auto node = std::make_shared<ASTNode>();
   node->logical_op = op;
@@ -59,8 +55,7 @@ std::shared_ptr<ASTNode> make_logical_op(ASTLogicalOp op, std::shared_ptr<ASTNod
 
 std::string op_to_str(ASTOp op);
 
-std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand,
-                                 std::shared_ptr<ASTNode> right_operand) {
+ASTNodeRef make_op(ASTOp op, ASTNodeRef left_operand, ASTNodeRef right_operand) {
   std::cout << "Creating " << op_to_str(op) << " node\n";
   auto node = std::make_shared<ASTNode>();
   node->op = op;
@@ -69,8 +64,7 @@ std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand
   return node;
 }
 
-std::shared_ptr<ASTNode> make_statement_list(std::shared_ptr<ASTNode> statement,
-                                             std::shared_ptr<ASTNode> statement_list) {
+ASTNodeRef make_statement_list(ASTNodeRef statement, ASTNodeRef statement_list) {
   std::cout << "Adding a Statement to a Statement list \n";
   if (statement_list) {
     statement_list->next = statement;
@@ -79,8 +73,7 @@ std::shared_ptr<ASTNode> make_statement_list(std::shared_ptr<ASTNode> statement,
   return statement;
 }
 
-std::shared_ptr<ASTNode> make_while(std::shared_ptr<ASTNode> condition,
-                                    std::shared_ptr<ASTNode> statement_list) {
+ASTNodeRef make_while(ASTNodeRef condition, ASTNodeRef statement_list) {
   std::cout << "Creating while loop node\n";
   auto node = std::make_shared<ASTNode>();
   node->condition = std::move(condition);
