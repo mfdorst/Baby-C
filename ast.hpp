@@ -22,7 +22,8 @@ enum ASTLogicalOp { OP_AND, OP_OR };
 
 struct ASTNode;
 
-using ASTNodeRef = std::shared_ptr<ASTNode>;
+// NOLINTNEXTLINE(modernize-use-using)
+typedef std::shared_ptr<ASTNode> ASTNodeRef;
 
 struct ASTNode {
   ASTNodeType type;
