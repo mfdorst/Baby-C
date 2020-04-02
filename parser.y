@@ -110,7 +110,7 @@ Condition: Compare
 }
 | Compare OR Compare
 {
-  $$ = make_comparison(OP_OR, $1, $3);
+  $$ = make_logical_op(OP_OR, $1, $3);
 };
 
 Compare: ComparePr
@@ -119,7 +119,7 @@ Compare: ComparePr
 }
 | ComparePr AND ComparePr
 {
-  $$ = make_comparison(OP_AND, $1, $3);
+  $$ = make_logical_op(OP_AND, $1, $3);
 };
 
 ComparePr: Expr CompOp Expr
