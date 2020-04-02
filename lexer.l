@@ -58,7 +58,7 @@ void yyerror (const char *s)
   return IDENT;
 }
 
-[1-9][0-9]* {
+0|[1-9][0-9]* {
   yylval.num = std::stoi(yytext);
   return NUM;
 }

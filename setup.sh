@@ -1,5 +1,7 @@
 #!/bin/sh
 
+alias mc="make clean && make"
+
 m() {
   # If no argument was passed, default to 1
   [ $# -eq 0 ] && set $1 1

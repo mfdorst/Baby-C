@@ -33,9 +33,14 @@
 %type <node> StatementList
 %type <node> Assignment
 %type <node> AssignmentLHS
+%type <node> WhileLoop
+%type <node> Condition
+%type <node> Compare
+%type <node> ComparePr
 %type <node> Expr
 %type <node> Term
 %type <node> Factor
+%type <comp_op> CompOp
 
 %%
 
@@ -64,6 +69,10 @@ StatementList: /* Empty */
 Statement: Assignment
 {
   $$ = $1;
+}
+| WhileLoop
+{
+  $$ = $1;
 };
 
 Assignment: AssignmentLHS '=' Expr ';'
@@ -75,6 +84,42 @@ AssignmentLHS: IDENT
 {
   $$ = make_ident($1, true);
 };
+
+WhileLoop: WHILE '(' Condition ')' '{' StatementList '}'
+{
+  $$ = make_while($3, $6);
+};
+
+Condition: Compare
+{
+  $$ = $1;
+}
+| Compare OR Compare
+{
+  $$ = make_comparison(OP_OR, $1, $3);
+};
+
+Compare: ComparePr
+{
+  $$ = $1;
+}
+| ComparePr AND ComparePr
+{
+  $$ = make_comparison(OP_AND, $1, $3);
+};
+
+ComparePr: Expr CompOp Expr
+{
+  $$ = make_comparison($2, $1, $3);
+};
+
+CompOp:
+  '<' { $$ = OP_LT; }
+| '>' { $$ = OP_GT; }
+| LE { $$ = OP_LE; }
+| GE { $$ = OP_GE; }
+| EQ { $$ = OP_EQ; }
+| NE { $$ = OP_NE; };
 
 Expr: Expr '+' Term
 {

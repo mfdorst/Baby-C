@@ -9,6 +9,17 @@ std::shared_ptr<ASTNode> make_assign(std::shared_ptr<ASTNode> lhs, std::shared_p
   return node;
 }
 
+std::shared_ptr<ASTNode> make_comparison(ASTCompOp op, std::shared_ptr<ASTNode> lhs,
+                                         std::shared_ptr<ASTNode> rhs) {
+
+  std::cout << "Creating " << (op == OP_OR ? "OR" : "Compare") << " node\n";
+  auto node = std::make_shared<ASTNode>();
+  node->comp_op = op;
+  node->left = std::move(lhs);
+  node->right = std::move(rhs);
+  return node;
+}
+
 std::shared_ptr<ASTNode> make_num(int num) {
   std::cout << "Creating NUM node for " << num << '\n';
   auto node = std::make_shared<ASTNode>();
@@ -44,6 +55,15 @@ std::shared_ptr<ASTNode> make_op(ASTOp op, std::shared_ptr<ASTNode> left_operand
   node->op = op;
   node->left = std::move(left_operand);
   node->right = std::move(right_operand);
+  return node;
+}
+
+std::shared_ptr<ASTNode> make_while(std::shared_ptr<ASTNode> condition,
+                                    std::shared_ptr<ASTNode> statement_list) {
+  std::cout << "Creating while loop node\n";
+  auto node = std::make_shared<ASTNode>();
+  node->condition = std::move(condition);
+  node->while_block = std::move(statement_list);
   return node;
 }
 
