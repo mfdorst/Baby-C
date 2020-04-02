@@ -1,5 +1,6 @@
 #include <fstream>
 #include <memory>
+#include <stdexcept>
 
 extern std::unique_ptr<std::ifstream> g_lexer_input;
 
