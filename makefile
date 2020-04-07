@@ -1,26 +1,22 @@
 CC = gcc
-CWARN = -Wall -Wextra -fsanitize=address
-DBGCFLAGS = -g -O0
+WARNFLAGS = -Wall -Wextra
+DEBUGFLAGS = -g -O0
 
-all: bbc
+all: bcc
 
-debug: bbc
+OBJS := parser.tab.o lexer.yy.o ast.o main.o
 
-bbc: Parser Scanner YourCode 
-	$(CC) $(CWARN) $(DBGCFLAGS) BabyC.tab.o lex.yy.o driver.o your_code.o -o bcc
+bcc: $(OBJS)
+	$(CC) $(WARNFLAGS) $(DEBUGFLAGS) $(OBJS) -o $@
 
-YourCode: your_code.o driver.o 
+%.o: %.c
+	$(CC) $(WARNFLAGS) $(DEBUGFLAGS) -c $<
 
-Scanner: BabyC.lex 
-	flex BabyC.lex
-	$(CC) $(DBGCFLAGS) -c lex.yy.c
+%.yy.c: %.l
+	flex -o $@ $<
 
-Parser: BabyC.y  
-	bison -d BabyC.y
-	$(CC) $(DBGCFLAGS) -c BabyC.tab.c
-
-%.o: %.c 
-	$(CC) $(CWARN) $(DBGCFLAGS) -c $<
+%.tab.c: %.y
+	bison -o $@ -d $<
 
 clean:
 	rm -f *.o *.tab.* *.yy.* bcc

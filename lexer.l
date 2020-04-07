@@ -1,8 +1,8 @@
 %{
+#include "ast.h"
+#include "parser.tab.h"
 #include <stdio.h>
 #include <string.h>
-#include "your_code.h"
-#include "BabyC.tab.h"
 
 void yyerror (const char *s) 
 {
