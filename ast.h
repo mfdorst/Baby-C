@@ -12,17 +12,16 @@ typedef enum {
   ASTNODE_WHILE
 } ASTNodeType;
 
-// Define all operation types (add, mult, etc) here.
 typedef enum { OP_ADD, OP_SUB, OP_MULT, OP_DIV } ASTOp;
 
 typedef struct ASTNode ASTNode;
 struct ASTNode {
   ASTNodeType type;
-  ASTOp op;       // The actual operation (add, mult, etc)
-  int num;        // Need to store the actual value for number nodes
-  char *name;     // Need to store the actual variable name for ident nodes
-  ASTNode *left;  // Left child
-  ASTNode *right; // Right child
+  ASTOp op;
+  int num;
+  char *name;
+  ASTNode *left;
+  ASTNode *right;
 
   // The following pointer is just a suggestion; you don't have to use it if you
   // have a better design.
@@ -33,16 +32,16 @@ struct ASTNode {
   // struct
 };
 
-// Add functions to create the different kinds of ASTNodes
+// Add functions to make_ the different kinds of ASTs
 // These functions are called by the code embedded in the grammar.
 // Here are some samples:
-ASTNode *CreateNumNode(int num);
-ASTNode *CreateIdentNode(char *name);
-ASTNode *CreateStatementListNode(ASTNode *st, ASTNode *stList);
+ASTNode *make_num(int num);
+ASTNode *make_ident(char *name);
+ASTNode *make_statement_list(ASTNode *st, ASTNode *stList);
 ASTNode *make_op(ASTOp operator, ASTNode *left_operand, ASTNode *right_operand);
 
 // Need a function to add a declaration to your symbol table
-void AddDeclaration(char *name);
+void add_declaration(char *name);
 
 // This is the function that generates ILOC code after the construction of the
 // AST
