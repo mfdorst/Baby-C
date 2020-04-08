@@ -19,19 +19,55 @@ typedef enum { OP_LT, OP_GT, OP_LE, OP_GE, OP_EQ, OP_NE } ASTCompOp;
 
 typedef struct ASTNode ASTNode;
 
+typedef struct {
+  ASTArithOp op;
+  ASTNode *lhs;
+  ASTNode *rhs;
+} ASTArithOpNode;
+
+typedef struct {
+  ASTLogicOp op;
+  ASTNode *lhs;
+  ASTNode *rhs;
+} ASTLogicOpNode;
+
+typedef struct {
+  ASTCompOp op;
+  ASTNode *lhs;
+  ASTNode *rhs;
+} ASTCompOpNode;
+
+typedef struct {
+  ASTNode * lhs;
+  ASTNode * rhs;
+} ASTAssignNode;
+
+typedef struct {
+  ASTNode *condition;
+  ASTNode *if_block;
+  ASTNode *else_block;
+} ASTIfNode;
+
+typedef struct {
+  ASTNode *condition;
+  ASTNode *code_block;
+} ASTWhileNode;
+
+typedef union {
+  ASTArithOpNode arith_op;
+  ASTLogicOpNode logic_op;
+  ASTCompOpNode comp_op;
+  ASTAssignNode assign;
+  ASTIfNode if_stmt;
+  ASTWhileNode while_loop;
+  char * ident;
+  int num;
+} ASTNodeData;
+
 struct ASTNode {
   ASTNodeType type;
-  ASTArithOp arith_op;
-  ASTLogicOp logic_op;
-  ASTCompOp comp_op;
-  int num;
-  char *name;
-  ASTNode *left;
-  ASTNode *right;
-  ASTNode *next;
-  ASTNode *conditon;
-  ASTNode *code_block;
-  ASTNode *else_block;
+  ASTNodeData data;
+  ASTNode * next;
 };
 
 void add_declaration(char *name);
