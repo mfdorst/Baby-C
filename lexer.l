@@ -10,13 +10,13 @@ void yyerror (const char *s)
    exit(1);
 }
 
-
 %}
 
-/*Option to get the line number*/
 %option yylineno
 
-/*We are not using yywrap. So, use this option to disable it and supress a compile error*/
+/* Don't generate functions we aren't using */
+%option nounput
+%option noinput
 %option noyywrap
 
 %%
@@ -47,10 +47,16 @@ void yyerror (const char *s)
 "else" return ELSE;
 "while" return WHILE;
 
-[a-zA-Z_][a-zA-Z0-9_]* yylval.string = strdup(yytext); return IDENT; // This is the action for IDENT. Write the regular expression before the action.
-[0-9]+ yylval.num = atoi(yytext); return NUM; // This is the action for NUM. Write the regular expression before the action.
-
-[ \t\n]+		//Whitespace is ignored
-.           printf( "ERROR on Line %d: Unrecognized token \n", yylineno ); exit(1); //No match. Fatal error.
-
-
+[a-zA-Z][a-zA-Z0-9]* {
+  yylval.string = strdup(yytext);
+  return IDENT;
+}
+[0-9]+ {
+  yylval.num = atoi(yytext);
+  return NUM;
+}
+[ \t\n]+ // Ignore whitespace
+. {
+  printf( "ERROR on Line %d: Unrecognized token \n", yylineno );
+  exit(1);
+}
