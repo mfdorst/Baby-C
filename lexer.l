@@ -51,7 +51,7 @@ void yyerror (const char *s)
   yylval.string = strdup(yytext);
   return IDENT;
 }
-[0-9]+ {
+0|[1-9][0-9]* {
   yylval.num = atoi(yytext);
   return NUM;
 }
