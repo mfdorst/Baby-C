@@ -3,3 +3,4 @@
 *.tab.*
 *.o
 bcc
+bcc.out

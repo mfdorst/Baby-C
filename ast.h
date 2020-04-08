@@ -11,7 +11,7 @@ typedef enum {
   AST_WHILE
 } ASTNodeType;
 
-typedef enum { OP_ADD, OP_SUB, OP_MULT, OP_DIV } ASTOp;
+typedef enum { OP_ADD, OP_SUB, OP_MULT, OP_DIV, OP_AND, OP_OR } ASTOp;
 
 typedef struct ASTNode ASTNode;
 
@@ -25,10 +25,9 @@ struct ASTNode {
   ASTNode *next;
 };
 
-ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
-ASTNode *make_num(int num);
-ASTNode *make_ident(char *name);
-ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list);
-ASTNode *make_op(ASTOp operator, ASTNode *left_operand, ASTNode *right_operand);
-
 void add_declaration(char *name);
+ASTNode *make_op(ASTOp operator, ASTNode *left_operand, ASTNode *right_operand);
+ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
+ASTNode *make_ident(char *name);
+ASTNode *make_num(int num);
+ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list);
