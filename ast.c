@@ -5,7 +5,7 @@
 
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->type = ASTNODE_ASSIGN;
+  node->type = AST_ASSIGN;
   node->left = lhs;
   node->right = expr;
   return node;
@@ -13,14 +13,14 @@ ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
 
 ASTNode *make_num(int num) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->type = ASTNODE_NUM;
+  node->type = AST_NUM;
   node->num = num;
   return node;
 }
 
 ASTNode *make_ident(char *name) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->type = ASTNODE_IDENT;
+  node->type = AST_IDENT;
   node->name = name;
   return node;
 }
