@@ -5,11 +5,29 @@
 
 void add_declaration(char *name) {}
 
+ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand) {
+  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  node->type = AST_ARITH_OP;
+  node->arith_op = operator;
+  node->left = left_operand;
+  node->right = right_operand;
+  return node;
+}
+
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_ASSIGN;
   node->left = lhs;
   node->right = expr;
+  return node;
+}
+
+ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand) {
+  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  node->type = AST_COMP_OP;
+  node->arith_op = operator;
+  node->left = left_operand;
+  node->right = right_operand;
   return node;
 }
 
@@ -20,23 +38,19 @@ ASTNode *make_ident(char *name) {
   return node;
 }
 
+ASTNode *make_logic_op(ASTLogicOp operator, ASTNode *left_operand, ASTNode *right_operand) {
+  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  node->type = AST_LOGIC_OP;
+  node->logic_op = operator;
+  node->left = left_operand;
+  node->right = right_operand;
+  return node;
+}
+
 ASTNode *make_num(int num) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_NUM;
   node->num = num;
-  return node;
-}
-
-ASTNode *make_op(ASTOp operator, ASTNode *left_operand, ASTNode *right_operand) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  if (operator == OP_AND || operator == OP_OR) {
-    node->type = AST_LOGIC_OP;
-  } else {
-    node->type = AST_ARITH_OP;
-  }
-  node->op = operator;
-  node->left = left_operand;
-  node->right = right_operand;
   return node;
 }
 
@@ -47,4 +61,12 @@ ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list) {
   } else {
     return statement;
   }
+}
+
+ASTNode *make_while_loop(ASTNode *condition, ASTNode *code_block) {
+  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  node->type = AST_WHILE;
+  node->conditon = condition;
+  node->code_block = code_block;
+  return node;
 }
