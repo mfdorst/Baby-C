@@ -3,6 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
+  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  node->type = ASTNODE_ASSIGN;
+  node->left = lhs;
+  node->right = expr;
+  return node;
+}
+
 ASTNode *make_num(int num) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = ASTNODE_NUM;
@@ -12,7 +20,7 @@ ASTNode *make_num(int num) {
 
 ASTNode *make_ident(char *name) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
-  node->type = ASTNODE_NUM;
+  node->type = ASTNODE_IDENT;
   node->name = name;
   return node;
 }

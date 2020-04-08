@@ -22,28 +22,14 @@ struct ASTNode {
   char *name;
   ASTNode *left;
   ASTNode *right;
-
-  // The following pointer is just a suggestion; you don't have to use it if you
-  // have a better design.
-  ASTNode *next; // a pointer used to link statement nodes together in a
-                 // statement list
-
-  // Depending on your implementation, you may need to add other fields to this
-  // struct
+  ASTNode *next;
 };
 
-// Add functions to make_ the different kinds of ASTs
-// These functions are called by the code embedded in the grammar.
-// Here are some samples:
+ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
 ASTNode *make_num(int num);
 ASTNode *make_ident(char *name);
-ASTNode *make_statement_list(ASTNode *st, ASTNode *stList);
+ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list);
 ASTNode *make_op(ASTOp operator, ASTNode *left_operand, ASTNode *right_operand);
 
-// Need a function to add a declaration to your symbol table
 void add_declaration(char *name);
-
-// This is the function that generates ILOC code after the construction of the
-// AST
-// void GenerateILOC(ASTNode* node);
 #endif
