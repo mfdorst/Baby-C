@@ -83,6 +83,16 @@ Statement: Assignment
 {
   printf("Creating while loop node\n");
   $$ = make_while_loop($3, $6);
+}
+| "if" '(' Condition ')' '{' StatementList '}'
+{
+  printf("Creating if Statement node\n");
+  $$ = make_if($3, $6, NULL);
+}
+| "if" '(' Condition ')' '{' StatementList '}' "else" '{' StatementList '}'
+{
+  printf("Creating if-else Statement node\n");
+  $$ = make_if($3, $6, $10);
 };
 
 Assignment: LHS '=' Expr ';'

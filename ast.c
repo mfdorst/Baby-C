@@ -25,7 +25,7 @@ ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
 ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_COMP_OP;
-  node->arith_op = operator;
+  node->comp_op = operator;
   node->left = left_operand;
   node->right = right_operand;
   return node;
@@ -35,6 +35,15 @@ ASTNode *make_ident(char *name) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_IDENT;
   node->name = name;
+  return node;
+}
+
+ASTNode *make_if(ASTNode *condition, ASTNode *if_block, ASTNode *else_block) {
+  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  node->type = AST_IF;
+  node->conditon = condition;
+  node->code_block = if_block;
+  node->else_block = else_block;
   return node;
 }
 

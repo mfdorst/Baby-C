@@ -31,6 +31,7 @@ struct ASTNode {
   ASTNode *next;
   ASTNode *conditon;
   ASTNode *code_block;
+  ASTNode *else_block;
 };
 
 void add_declaration(char *name);
@@ -38,6 +39,7 @@ ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *righ
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
 ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_ident(char *name);
+ASTNode *make_if(ASTNode *condition, ASTNode *if_block, ASTNode *else_block);
 ASTNode *make_logic_op(ASTLogicOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_num(int num);
 ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list);
