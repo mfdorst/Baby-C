@@ -5,8 +5,7 @@
 extern FILE *yyin;
 extern int yyparse();
 
-// A global variable that holds a pointer to the AST root
-ASTNode *gASTRoot;
+ASTNode *g_ast_root;
 
 int main(int argc, char **argv) {
   if (argc != 2) {
@@ -20,14 +19,6 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  // Call the parser.
-  // Add embedded actions to the parser (in BabyC.y) to construct the AST and
-  // store its root in gASTRoot.
   yyparse();
   fclose(yyin);
-
-  // Now that the AST has been constructed, pass its root to the function that
-  // traverses it and generates the ILOC code. GenerateILOC(gASTRoot); Code
-  // generation is commented out in this assignment. You will implement it in
-  // the next assignment.
 }

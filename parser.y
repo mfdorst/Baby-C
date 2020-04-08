@@ -2,25 +2,16 @@
 	#include "ast.h"
 	#include <stdio.h>
 
-// The parser needs to call the scanner to get the next token 
 	extern int yylex();
 
-// The error function 
 	extern int yyerror(const char *);
 
-// The ASTNode root
-    extern ASTNode* gASTRoot;
+    extern ASTNode* g_ast_root;
 
   #define YYERROR_VERBOSE
   #define YYDEBUG 1
   
 %}
-
-//Put any initialization code here 
-%initial-action 
-{
-
-}
 
 %token LE "<="
 %token GE ">="
@@ -34,33 +25,33 @@
 %token ELSE "else"
 %token WHILE "while"
 
-//Define the types for the grammar attributes ($$, $1, $2, ...) 
 %union 
 {
-	ASTNode* node; // Most $$ values will be ASTNodes 
-	int num; // Integer numbers
-	char* string; // Strings for identifiers 
+	ASTNode* node;
+	int num;
+	char* string;
 }
 
-//Specify the type for each token. Only needed for IDENT and NUM, because they are the only ones that have actual regexp rules
 %token <string> IDENT
 %token <num> NUM
 
-//Specify the type for each non-terminal in the grammar. Here are some samples:
 %type <node> DeclarationList
 %type <node> Statement
 %type <node> StatementList
 %type <node> Expr
 %type <node> Term
 %type <node> Factor
-// Add the rest of the types for the grammar's symbols
 
 %%
 
-Goal: "main" '(' ')' '{' DeclarationList StatementList '}'	{gASTRoot=$6;} // Store the AST root node in gASTRoot
-;
+Goal:
+"main" '(' ')' '{' DeclarationList StatementList '}'
+{
+  g_ast_root = $6;
+};
 
-DeclarationList: /* Empty */{}
+DeclarationList:
+/* Empty */ {}
 | Declaration DeclarationList {}
 
 Declaration:
@@ -70,7 +61,8 @@ Declaration:
   printf("Processing declaration of %s\n", $2);
 };
 
-StatementList: /* Empty */
+StatementList:
+/* Empty */
 {
   $$ = NULL;
 } 
