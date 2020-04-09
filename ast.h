@@ -38,8 +38,8 @@ typedef struct {
 } ASTCompOpNode;
 
 typedef struct {
-  ASTNode * lhs;
-  ASTNode * rhs;
+  ASTNode *lhs;
+  ASTNode *rhs;
 } ASTAssignNode;
 
 typedef struct {
@@ -60,17 +60,16 @@ typedef union {
   ASTAssignNode assign;
   ASTIfNode if_stmt;
   ASTWhileNode while_loop;
-  char * ident;
+  char *ident;
   int num;
 } ASTNodeData;
 
 struct ASTNode {
   ASTNodeType type;
   ASTNodeData data;
-  ASTNode * next;
+  ASTNode *next;
 };
 
-void add_declaration(char *name);
 ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
 ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand);

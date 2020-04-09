@@ -4,7 +4,7 @@ DEBUGFLAGS = -g -O0
 
 all: bcc
 
-OBJS := parser.tab.o lexer.yy.o ast.o main.o
+OBJS := parser.tab.o lexer.yy.o ast.o symbol_table.o main.o
 
 bcc: $(OBJS)
 	$(CC) $(WARNFLAGS) $(DEBUGFLAGS) $(OBJS) -o $@
