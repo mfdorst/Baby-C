@@ -1,5 +1,7 @@
 #pragma once
 
+#include "symbol_table.h"
+
 typedef enum {
   AST_ARITH_OP,
   AST_LOGIC_OP,
@@ -60,7 +62,7 @@ typedef union {
   ASTAssignNode assign;
   ASTIfNode if_stmt;
   ASTWhileNode while_loop;
-  char *ident;
+  Symbol *ident;
   int num;
 } ASTNodeData;
 
@@ -73,7 +75,7 @@ struct ASTNode {
 ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
 ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand);
-ASTNode *make_ident(char *name);
+ASTNode *make_ident(Symbol *symbol);
 ASTNode *make_if(ASTNode *condition, ASTNode *if_block, ASTNode *else_block);
 ASTNode *make_logic_op(ASTLogicOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_num(int num);

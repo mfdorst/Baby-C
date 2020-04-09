@@ -1,18 +1,18 @@
 #include "symbol_table.h"
-#include <stddef.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct LLNode LLNode;
 
 struct LLNode {
-  char *symbol;
+  Symbol symbol;
   LLNode *next;
 };
 
 LLNode *g_head;
 LLNode *g_tail;
+size_t g_offset = 0;
 
 LLNode *make_llnode(void);
 
@@ -24,22 +24,29 @@ void add_declaration(char *symbol) {
     g_tail->next = make_llnode();
     g_tail = g_tail->next;
   }
-  g_tail->symbol = symbol;
+  g_tail->symbol.name = symbol;
+  g_tail->symbol.offset = g_offset;
+  g_offset += 4;
 }
 
 bool is_declared(char *symbol) {
-  LLNode *node;
+  return find_symbol(symbol) != NULL;
+}
+
+Symbol *find_symbol(char *name) {
+  LLNode* node;
   for (node = g_head; node != NULL; node = node->next) {
-    if (strcmp(symbol, node->symbol) == 0) {
-      return true;
+    if (strcmp(node->symbol.name, name) == 0) {
+      return &node->symbol;
     }
   }
-  return false;
+  return NULL;
 }
 
 LLNode *make_llnode(void) {
-  LLNode * node = (LLNode *) malloc(sizeof(LLNode));
-  node->symbol = NULL;
+  LLNode *node = (LLNode *)malloc(sizeof(LLNode));
+  node->symbol.name = NULL;
+  node->symbol.offset = 0;
   node->next = NULL;
   return node;
 }

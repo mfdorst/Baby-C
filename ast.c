@@ -29,10 +29,10 @@ ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_
   return node;
 }
 
-ASTNode *make_ident(char *name) {
+ASTNode *make_ident(Symbol *symbol) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_IDENT;
-  node->data.ident = name;
+  node->data.ident = symbol;
   return node;
 }
 
