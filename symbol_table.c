@@ -29,18 +29,26 @@ void add_declaration(char *symbol) {
   g_offset += 4;
 }
 
-bool is_declared(char *symbol) {
-  return find_symbol(symbol) != NULL;
-}
+bool is_declared(char *symbol) { return find_symbol(symbol) != NULL; }
 
 Symbol *find_symbol(char *name) {
-  LLNode* node;
+  LLNode *node;
   for (node = g_head; node != NULL; node = node->next) {
     if (strcmp(node->symbol.name, name) == 0) {
       return &node->symbol;
     }
   }
   return NULL;
+}
+
+void free_symbol_table() {
+  LLNode *node = g_head;
+  while (node != NULL) {
+    LLNode *next = node->next;
+    free(node->symbol.name);
+    free(node);
+    node = next;
+  }
 }
 
 LLNode *make_llnode(void) {

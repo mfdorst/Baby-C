@@ -28,10 +28,9 @@ typedef struct {
 } ASTArithOpNode;
 
 typedef struct {
-  ASTLogicOp op;
   ASTNode *lhs;
   ASTNode *rhs;
-} ASTLogicOpNode;
+} ASTAssignNode;
 
 typedef struct {
   ASTCompOp op;
@@ -40,15 +39,16 @@ typedef struct {
 } ASTCompOpNode;
 
 typedef struct {
-  ASTNode *lhs;
-  ASTNode *rhs;
-} ASTAssignNode;
-
-typedef struct {
   ASTNode *condition;
   ASTNode *if_block;
   ASTNode *else_block;
 } ASTIfNode;
+
+typedef struct {
+  ASTLogicOp op;
+  ASTNode *lhs;
+  ASTNode *rhs;
+} ASTLogicOpNode;
 
 typedef struct {
   ASTNode *condition;
@@ -72,6 +72,7 @@ struct ASTNode {
   ASTNode *next;
 };
 
+void free_ast(ASTNode *node);
 ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
 ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand);

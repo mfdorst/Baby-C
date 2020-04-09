@@ -3,6 +3,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void free_ast(ASTNode *node) {
+  if (node == NULL)
+    return;
+  switch (node->type) {
+  case AST_ARITH_OP:
+    free_ast(node->data.arith_op.lhs);
+    free_ast(node->data.arith_op.rhs);
+    break;
+  case AST_ASSIGN:
+    free_ast(node->data.assign.lhs);
+    free_ast(node->data.assign.rhs);
+    break;
+  case AST_COMP_OP:
+    free_ast(node->data.comp_op.lhs);
+    free_ast(node->data.comp_op.rhs);
+    break;
+  case AST_IDENT:
+    break;
+  case AST_IF:
+    free_ast(node->data.if_stmt.condition);
+    free_ast(node->data.if_stmt.if_block);
+    free_ast(node->data.if_stmt.else_block);
+    break;
+  case AST_LOGIC_OP:
+    free_ast(node->data.logic_op.lhs);
+    free_ast(node->data.logic_op.rhs);
+    break;
+  case AST_NUM:
+    break;
+  case AST_WHILE:
+    free_ast(node->data.while_loop.condition);
+    free_ast(node->data.while_loop.code_block);
+  }
+  free(node);
+}
+
 ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand) {
   ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
   node->type = AST_ARITH_OP;

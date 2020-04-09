@@ -21,4 +21,7 @@ int main(int argc, char **argv) {
 
   yyparse();
   fclose(yyin);
+
+  free_ast(g_ast_root);
+  free_symbol_table();
 }

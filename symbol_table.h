@@ -11,3 +11,4 @@ typedef struct {
 void add_declaration(char *name);
 bool is_declared(char *symbol);
 Symbol *find_symbol(char *name);
+void free_symbol_table();
