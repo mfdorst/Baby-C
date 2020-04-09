@@ -19,4 +19,4 @@ bcc: $(OBJS)
 	bison -o $@ -d $<
 
 clean:
-	rm -f *.o *.tab.* *.yy.* bcc
+	rm -f *.o *.tab.* *.yy.* bcc bcc.out
