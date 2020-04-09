@@ -20,3 +20,12 @@ t() {
   ./bcc tests/test$1.bc >| bcc.out
   diff bcc.out tests/test$1_result.txt
 }
+
+ta() {
+  for i in 1 2 3 4 5 6 7 8; do
+    echo Test $i:
+    if ! t $i; then
+      break
+    fi
+  done
+}
