@@ -17,6 +17,6 @@ rem() {
 t() {
   # If no argument was passed, default to 1
   [ $# -eq 0 ] && set $1 1
-  ./bcc tests/test$1.bc > bcc.out
+  ./bcc tests/test$1.bc >| bcc.out
   diff bcc.out tests/test$1_result.txt
 }
