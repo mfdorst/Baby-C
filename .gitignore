@@ -1,7 +1,6 @@
 .DS_Store
-*.yy.*
-*.tab.*
-*.o
+obj/
+gen/
 bcc
 bcc.out
 tests/test?.iloc

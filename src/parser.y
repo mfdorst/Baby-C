@@ -1,6 +1,6 @@
 %{
-	#include "ast.h"
-  #include "symbol_table.h"
+	#include "../src/ast.h"
+  #include "../src/symbol_table.h"
 	#include <stdio.h>
   #include <string.h>
 
