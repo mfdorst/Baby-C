@@ -35,4 +35,3 @@ clean:
 	rm -rf $(OBJDIR)
 	rm -rf $(GENDIR)
 	rm bcc
-	rm test.bc
