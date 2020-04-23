@@ -1,6 +1,6 @@
 CC = gcc
 WARNFLAGS = -Wall -Wextra
-DEBUGFLAGS = -g -O0 -DDEBUG
+DEBUGFLAGS = -g -O0
 OBJDIR = obj
 SRCDIR = src
 GENDIR = gen
