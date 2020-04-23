@@ -1,10 +1,10 @@
 CC = gcc
 WARNFLAGS = -Wall -Wextra
-DEBUGFLAGS = -g -O0
+DEBUGFLAGS = -g -O0 -DDEBUG
 OBJDIR = obj
 SRCDIR = src
 GENDIR = gen
-OBJS := $(addprefix $(OBJDIR)/,ast.o code_gen.o lexer.yy.o main.o parser.tab.o symbol_table.o)
+OBJS := $(addprefix $(OBJDIR)/,ast.o code_gen.o lexer.yy.o main.o parser.tab.o symbol_table.o util.o)
 
 all: bcc
 

@@ -12,7 +12,7 @@ struct LLNode {
 
 LLNode *g_head;
 LLNode *g_tail;
-size_t g_offset = 0;
+usize g_offset = 0;
 
 LLNode *make_llnode(void);
 

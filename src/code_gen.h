@@ -1,4 +1,7 @@
 #pragma once
+
+#include "ast.h"
+#include "util.h"
 #include <stdio.h>
 
-void generate_iloc(FILE *out_file);
+u32 generate_iloc(FILE *out_file, ASTNode *ast);

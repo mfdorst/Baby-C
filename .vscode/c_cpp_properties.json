@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Debug",
+            "defines": ["DEBUG"],
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++03"
+        }
+    ],
+    "version": 4
+}

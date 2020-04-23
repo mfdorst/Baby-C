@@ -1,11 +1,12 @@
 #pragma once
 
+#include "util.h"
 #include <stdbool.h>
 #include <stddef.h>
 
 typedef struct {
   char *name;
-  size_t offset;
+  usize offset;
 } Symbol;
 
 void add_declaration(char *name);

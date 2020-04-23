@@ -4,12 +4,12 @@
 
 typedef enum {
   AST_ARITH_OP,
-  AST_LOGIC_OP,
-  AST_COMP_OP,
   AST_ASSIGN,
+  AST_COMP_OP,
   AST_IDENT,
-  AST_NUM,
   AST_IF,
+  AST_LOGIC_OP,
+  AST_NUM,
   AST_WHILE
 } ASTNodeType;
 
@@ -63,7 +63,7 @@ typedef union {
   ASTIfNode if_stmt;
   ASTWhileNode while_loop;
   Symbol *ident;
-  int num;
+  i32 num;
 } ASTNodeData;
 
 struct ASTNode {
@@ -72,6 +72,10 @@ struct ASTNode {
   ASTNode *next;
 };
 
+#ifdef DEBUG
+void print_ast(const ASTNode *const ast);
+#endif
+
 void free_ast(ASTNode *node);
 ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand);
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr);
@@ -79,6 +83,6 @@ ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_
 ASTNode *make_ident(Symbol *symbol);
 ASTNode *make_if(ASTNode *condition, ASTNode *if_block, ASTNode *else_block);
 ASTNode *make_logic_op(ASTLogicOp operator, ASTNode *left_operand, ASTNode *right_operand);
-ASTNode *make_num(int num);
-ASTNode *make_statement_list(ASTNode *statement, ASTNode *statement_list);
+ASTNode *make_num(i32 num);
+ASTNode *prepend_statement(ASTNode *statement, ASTNode *statement_list);
 ASTNode *make_while_loop(ASTNode *condition, ASTNode *code_block);

@@ -79,7 +79,7 @@ StatementList: /* Empty */
 } 
 | Statement StatementList
 {
-  $$ = make_statement_list($1,$2);
+  $$ = prepend_statement($1, $2);
   printf("Adding a Statement to a Statement list \n");
 };
 

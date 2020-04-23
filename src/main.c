@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
   }
 
   char *in_file_path = argv[1];
-  size_t in_file_path_len = strlen(in_file_path);
+  usize in_file_path_len = strlen(in_file_path);
   // Check for the `.bc` extension
   if (in_file_path[in_file_path_len - 3] != '.' || in_file_path[in_file_path_len - 2] != 'b' ||
       in_file_path[in_file_path_len - 1] != 'c') {
@@ -46,7 +46,11 @@ int main(int argc, char **argv) {
   }
   free(out_file_path);
 
-  generate_iloc(out_file);
+#ifdef DEBUG
+  print_ast(g_ast_root);
+#endif
+
+  generate_iloc(out_file, g_ast_root);
 
   fclose(out_file);
   free_ast(g_ast_root);
