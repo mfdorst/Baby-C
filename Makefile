@@ -1,37 +1,75 @@
 CC = gcc
-WARNFLAGS = -Wall -Wextra
-DEBUGFLAGS = -g -O0
-OBJDIR = obj
+CFLAGS = -Wall -Wextra
 SRCDIR = src
 GENDIR = gen
-OBJS := $(addprefix $(OBJDIR)/,ast.o code_gen.o lexer.yy.o main.o parser.tab.o symbol_table.o util.o)
+OBJS := ast.o code_gen.o lexer.yy.o main.o parser.tab.o symbol_table.o util.o
+EXE = bcc
 
-all: bcc
+#
+# Debug build settings
+#
+DBGDIR = debug
+DBGEXE = $(DBGDIR)/$(EXE)
+DBGOBJS = $(addprefix $(DBGDIR)/, $(OBJS))
+DBGCFLAGS = -g -O0 -DDEBUG
 
-bcc: $(OBJS)
-	$(CC) $(WARNFLAGS) $(DEBUGFLAGS) $(OBJS) -o $@
+#
+# Release build settings
+#
+RELDIR = release
+RELEXE = $(RELDIR)/$(EXE)
+RELOBJS = $(addprefix $(RELDIR)/, $(OBJS))
+RELCFLAGS = -O3 -DNDEBUG
 
-$(OBJS): | $(OBJDIR)
+.PHONY: all clean debug prep release remake
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(WARNFLAGS) $(DEBUGFLAGS) -c $< -o $@
+# Default build
+all: prep release
 
-$(OBJDIR)/%.o: $(GENDIR)/%.c
-	$(CC) $(WARNFLAGS) $(DEBUGFLAGS) -c $< -o $@
+#
+# Debug rules
+#
+debug: $(DBGEXE)
 
+$(DBGEXE): $(DBGOBJS)
+	$(CC) $(CFLAGS) $(DBGCFLAGS) -o $(DBGEXE) $^
+
+$(DBGDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) $(DBGCFLAGS) -o $@ $<
+
+$(DBGDIR)/%.o: $(GENDIR)/%.c
+	$(CC) -c $(CFLAGS) $(DBGCFLAGS) -o $@ $<
+
+#
+# Release rules
+#
+release: $(RELEXE)
+
+$(RELEXE): $(RELOBJS)
+	$(CC) $(CFLAGS) $(RELCFLAGS) -o $(RELEXE) $^
+
+$(RELDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(CFLAGS) $(RELCFLAGS) -o $@ $<
+
+$(RELDIR)/%.o: $(GENDIR)/%.c
+	$(CC) -c $(CFLAGS) $(RELCFLAGS) -o $@ $<
+
+#
+# Flex and Bison rules
+#
 $(GENDIR)/lexer.yy.c: $(SRCDIR)/lexer.l | $(GENDIR)/parser.tab.c
 	flex -o $@ $<
 
 $(GENDIR)/parser.tab.c: $(SRCDIR)/parser.y | $(GENDIR)
 	bison -o $@ -d $<
 
-$(OBJDIR):
-	mkdir $(OBJDIR)
+#
+# Other rules
+#
+prep:
+	@mkdir -p $(DBGDIR) $(RELDIR) $(GENDIR)
 
-$(GENDIR):
-	mkdir $(GENDIR)
+remake: clean all
 
 clean:
-	rm -rf $(OBJDIR)
-	rm -rf $(GENDIR)
-	rm bcc
+	rm -f $(RELEXE) $(RELOBJS) $(DBGEXE) $(DBGOBJS)

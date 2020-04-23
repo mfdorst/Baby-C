@@ -1,6 +1,5 @@
 .DS_Store
-obj/
 gen/
-bcc
-bcc.out
+debug/
+release/
 tests/test?.iloc

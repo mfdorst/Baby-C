@@ -1,26 +1,29 @@
 #!/bin/sh
 
-alias mc="make clean && make"
+alias mr="make release"
+alias md="make debug"
+alias rmr="make clean && make release"
+alias rmd="make clean && make debug"
 
-m() {
+deb() {
   # If no argument was passed, default to 1
   [ $# -eq 0 ] && set $1 1
-  make && echo && ./bcc tests/test$1.bc
+  debug/bcc tests/test$1.bc
 }
 
-rem() {
+rel() {
   # If no argument was passed, default to 1
   [ $# -eq 0 ] && set $1 1
-  make clean && make && echo && ./bcc tests/test$1.bc
+  make release && echo && release/bcc tests/test$
 }
 
 t() {
   # If no argument was passed, default to 1
   [ $# -eq 0 ] && set $1 1
   echo "[Test $1]"
-  ./bcc tests/test$1.bc >| bcc.out
+  release/bcc tests/test$1.bc >| release/bcc.out
   echo "[Parser]"
-  diff bcc.out tests/test$1_result.txt
+  diff release/bcc.out tests/test$1_result.txt
   echo "[Code gen]"
   diff tests/test$1.iloc tests/test$1_ref.iloc
 }
