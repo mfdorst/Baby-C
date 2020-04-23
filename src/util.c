@@ -12,7 +12,7 @@ u32 num_digits(i32 num) {
   for (digits = 0; num > 0; ++digits) {
     num /= 10;
   }
-  return digits + negative ? 1 : 0;
+  return digits + (negative ? 1 : 0);
 }
 
 char *i32_to_str(i32 num) {
