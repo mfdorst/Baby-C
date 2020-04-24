@@ -232,7 +232,13 @@ void print_ast_impl(const ASTNode *const ast, const char *const current_prefix,
   }
   if (ast->type == AST_WHILE) {
     print_ast_impl(ast->data.while_loop.condition, next_prefix, not_last_prefix, false);
-    print_ast_impl(ast->data.while_loop.code_block, next_prefix, last_prefix, true);
+    ASTNode *statement = ast->data.while_loop.code_block;
+    while (statement != NULL) {
+      bool has_next = statement->next != NULL;
+      const char *prefix = has_next ? not_last_prefix : last_prefix;
+      print_ast_impl(statement, next_prefix, prefix, !has_next);
+      statement = statement->next;
+    }
   }
   free(not_last_prefix);
   free(last_prefix);
