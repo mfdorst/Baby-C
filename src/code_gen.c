@@ -63,6 +63,21 @@ u32 generate_iloc(FILE *out_file, const ASTNode *const ast) {
     fprintf(out_file, "\tloadAI rarp, %u -> r%u\n", offset, dest);
     return dest;
   }
+  if (ast->type == AST_IF) {
+    const u32 label = g_next_label++;
+    const u32 cond = generate_iloc(out_file, ast->data.if_stmt.condition);
+    const bool has_else = ast->data.if_stmt.else_block != NULL;
+    const char label_suffix = has_else ? 'E' : 'M';
+    fprintf(out_file, "\tcbr r%u -> L%u_T, L%u_%c\n", cond, label, label, label_suffix);
+    fprintf(out_file, "L%u_T:\n", label);
+    generate_iloc(out_file, ast->data.if_stmt.if_block);
+    if (has_else) {
+      fprintf(out_file, "\tjumpi -> L%u_M\n", label);
+      fprintf(out_file, "L%u_E:\n", label);
+      generate_iloc(out_file, ast->data.if_stmt.else_block);
+    }
+    fprintf(out_file, "L%u_M:\n", label);
+  }
   if (ast->type == AST_LOGIC_OP) {
     char *op;
     if (ast->data.logic_op.op == OP_AND) {
