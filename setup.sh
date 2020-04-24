@@ -14,7 +14,7 @@ deb() {
 rel() {
   # If no argument was passed, default to 1
   [ $# -eq 0 ] && set $1 1
-  make release && echo && release/bcc tests/test$
+  release/bcc tests/test$1.bc
 }
 
 t() {
