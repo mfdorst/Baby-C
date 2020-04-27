@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra
 SRCDIR = src
 GENDIR = gen
-OBJS := ast.o code_gen.o lexer.yy.o main.o parser.tab.o symbol_table.o util.o
+OBJS := ast.o code_gen.o lexer.yy.o linked_list.o main.o parser.tab.o symbol_table.o util.o
 EXE = bcc
 
 #
@@ -11,7 +11,7 @@ EXE = bcc
 DBGDIR = debug
 DBGEXE = $(DBGDIR)/$(EXE)
 DBGOBJS = $(addprefix $(DBGDIR)/, $(OBJS))
-DBGCFLAGS = -g -O0 -DDEBUG
+DBGCFLAGS = -g -O0 -DDEBUG -fsanitize=address
 
 #
 # Release build settings

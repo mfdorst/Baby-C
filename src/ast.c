@@ -201,7 +201,8 @@ void print_ast_impl(const ASTNode *const ast, const char *const current_prefix,
   free(node_str);
 
   char *last_prefix = malloc(strlen(next_prefix) + 4);
-  char *not_last_prefix = malloc(strlen(next_prefix) + 4);
+  // The vertical bar is a 3-byte unicode character
+  char *not_last_prefix = malloc(strlen(next_prefix) + 6);
   sprintf(last_prefix, "%s   ", next_prefix);
   sprintf(not_last_prefix, "%s│  ", next_prefix);
 

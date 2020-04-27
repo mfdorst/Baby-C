@@ -2,11 +2,10 @@
 
 #include "util.h"
 #include <stdbool.h>
-#include <stddef.h>
 
 typedef struct {
   char *name;
-  usize offset;
+  u32 offset;
 } Symbol;
 
 void add_declaration(char *name);
