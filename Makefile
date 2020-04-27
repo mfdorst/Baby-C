@@ -24,12 +24,12 @@ RELCFLAGS = -O3 -DNDEBUG
 .PHONY: all clean debug prep release remake
 
 # Default build
-all: prep release
+all: release
 
 #
 # Debug rules
 #
-debug: $(DBGEXE)
+debug: prep $(DBGEXE)
 
 $(DBGEXE): $(DBGOBJS)
 	$(CC) $(CFLAGS) $(DBGCFLAGS) -o $(DBGEXE) $^
@@ -43,7 +43,7 @@ $(DBGDIR)/%.o: $(GENDIR)/%.c
 #
 # Release rules
 #
-release: $(RELEXE)
+release: prep $(RELEXE)
 
 $(RELEXE): $(RELOBJS)
 	$(CC) $(CFLAGS) $(RELCFLAGS) -o $(RELEXE) $^
