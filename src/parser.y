@@ -112,10 +112,11 @@ Assignment: LHS '=' Expr ';'
 LHS: IDENT
 {
   Symbol *symbol = find_symbol($1);
+  free($1);
   if (symbol == NULL) {
     yyerror("Ident not declared");
   }
-  printf("Creating left-hand IDENT node for %s\n", $1);
+  printf("Creating left-hand IDENT node for %s\n", symbol->name);
   $$ = make_ident(symbol);
 };
 
@@ -186,10 +187,11 @@ Term: Term '*' Factor
 Factor: IDENT
 {
   Symbol *symbol = find_symbol($1);
+  free($1);
   if (symbol == NULL) {
     yyerror("Ident not declared");
   }
-  printf("Creating IDENT node for %s\n", $1);
+  printf("Creating IDENT node for %s\n", symbol->name);
   $$ = make_ident(symbol);
 }
 | NUM

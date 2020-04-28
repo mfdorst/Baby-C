@@ -47,7 +47,10 @@ LinkedList *make_symbol_table() {
   return symbol_table;
 }
 
-void symbol_destructor(void *symbol) { free(symbol); }
+void symbol_destructor(void *symbol) {
+  free(((Symbol *)symbol)->name);
+  free(symbol);
+}
 
 bool symbol_has_name(const void *symbol, const void *name) {
   return strcmp(((Symbol *)symbol)->name, name) == 0;
