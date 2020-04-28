@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
   fclose(yyin);
 
   // Path of output file will be two characters longer, + 1 for NULL termination
-  char *out_file_path = (char *)malloc(in_file_path_len + 3);
+  char *out_file_path = malloc(in_file_path_len + 3);
   memcpy(out_file_path, in_file_path, in_file_path_len - 2);
   strcpy(out_file_path + in_file_path_len - 2, "iloc");
 

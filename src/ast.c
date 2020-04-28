@@ -50,7 +50,7 @@ void free_ast(ASTNode *node) {
 }
 
 ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *right_operand) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_ARITH_OP;
   node->data.arith_op.op = operator;
   node->data.arith_op.lhs = left_operand;
@@ -59,7 +59,7 @@ ASTNode *make_arith_op(ASTArithOp operator, ASTNode *left_operand, ASTNode *righ
 }
 
 ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_ASSIGN;
   node->data.assign.lhs = lhs;
   node->data.assign.rhs = expr;
@@ -67,7 +67,7 @@ ASTNode *make_assignment(ASTNode *lhs, ASTNode *expr) {
 }
 
 ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_operand) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_COMP_OP;
   node->data.comp_op.op = operator;
   node->data.comp_op.lhs = left_operand;
@@ -76,14 +76,14 @@ ASTNode *make_comp_op(ASTCompOp operator, ASTNode *left_operand, ASTNode *right_
 }
 
 ASTNode *make_ident(Symbol *symbol) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_IDENT;
   node->data.ident = symbol;
   return node;
 }
 
 ASTNode *make_if(ASTNode *condition, ASTNode *if_block, ASTNode *else_block) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_IF;
   node->data.if_stmt.condition = condition;
   node->data.if_stmt.if_block = if_block;
@@ -92,7 +92,7 @@ ASTNode *make_if(ASTNode *condition, ASTNode *if_block, ASTNode *else_block) {
 }
 
 ASTNode *make_logic_op(ASTLogicOp operator, ASTNode *left_operand, ASTNode *right_operand) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_LOGIC_OP;
   node->data.logic_op.op = operator;
   node->data.logic_op.lhs = left_operand;
@@ -101,7 +101,7 @@ ASTNode *make_logic_op(ASTLogicOp operator, ASTNode *left_operand, ASTNode *righ
 }
 
 ASTNode *make_num(i32 num) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_NUM;
   node->data.num = num;
   return node;
@@ -113,7 +113,7 @@ ASTNode *prepend_statement(ASTNode *statement, ASTNode *statement_list) {
 }
 
 ASTNode *make_while_loop(ASTNode *condition, ASTNode *code_block) {
-  ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+  ASTNode *node = malloc(sizeof(ASTNode));
   node->type = AST_WHILE;
   node->data.while_loop.condition = condition;
   node->data.while_loop.code_block = code_block;

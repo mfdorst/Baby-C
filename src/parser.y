@@ -65,7 +65,7 @@ Declaration: "int" IDENT ';'
 {
   if (is_declared($2)) {
     char *err_msg_part = "Multiple declarations of";
-    char *err_msg = (char *)malloc(strlen(err_msg_part) + strlen($2) + 4);
+    char *err_msg = malloc(strlen(err_msg_part) + strlen($2) + 4);
     sprintf(err_msg, "%s '%s'", err_msg_part, $2);
     yyerror(err_msg);
   }
