@@ -1,4 +1,5 @@
 #include "ast.h"
+#include "basic_block.h"
 #include "code_gen.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,8 +51,10 @@ int main(int argc, char **argv) {
   print_ast(g_ast_root);
 #endif
 
-  generate_iloc(out_file, g_ast_root);
+  Program program = construct_program();
+  generate_iloc(out_file, g_ast_root, &program);
 
+  destroy_program(&program);
   fclose(out_file);
   free_ast(g_ast_root);
   free_symbol_table();

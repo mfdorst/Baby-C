@@ -31,6 +31,13 @@ void list_append(LinkedList *list, void *elem);
 LinkedList list_create(void (*destructor)(void *));
 
 ///
+/// Destroys (frees) a linked list, utilizing the provided destructor.
+/// The container has no knowledge of the data it holds, and so must use the provided destructor
+/// function to free the contents of the list. O(n) time.
+///
+void list_destroy(LinkedList *list);
+
+///
 /// Finds an element that compares equal to the passed in element using the compare_eq function
 /// pointer. Returns the element, or NULL if no such element is found.
 ///
@@ -38,8 +45,7 @@ void *list_find(const LinkedList *list, const void *elem,
                 bool (*compare_eq)(const void *elem_in_list, const void *elem_to_find));
 
 ///
-/// Destroys (frees) a linked list, utilizing the provided destructor.
-/// The container has no knowledge of the data it holds, and so must use the provided destructor
-/// function to free the contents of the list. O(n) time.
+/// Get the element at the tail of the list.
+/// Returns NULL if the list is empty.
 ///
-void list_destroy(LinkedList *list);
+void *list_tail(const LinkedList *list);

@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra
 SRCDIR = src
 GENDIR = gen
-OBJS := ast.o code_gen.o lexer.yy.o linked_list.o main.o parser.tab.o symbol_table.o util.o
+OBJS := ast.o basic_block.o code_gen.o lexer.yy.o linked_list.o main.o parser.tab.o symbol_table.o util.o
 EXE = bcc
 
 #
