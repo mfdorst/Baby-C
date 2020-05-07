@@ -18,7 +18,7 @@ To build in debug mode (does not work on Athena because of the `-fsanitize=addre
 
     make debug
 
-The debug build will print the contents of the abstract syntax tree.
+The debug build will print the contents of the abstract syntax tree, and check for memory leaks.
 
 ### Testing
 
